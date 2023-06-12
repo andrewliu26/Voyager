@@ -1,8 +1,8 @@
 {
-  "name": "back-end",
+  "name": "voyager-be",
   "version": "1.0.0",
   "description": "",
-  "main": "blank.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
