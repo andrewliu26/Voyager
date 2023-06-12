@@ -1,1 +1,7 @@
-# User Story #2
+# User Story #2 &ndash; User Login
+
+<ins>Story: </ins><br /><br />
+As a new user of Voyager, I want to log into the app using my credentials for Twitter, Facebook, or Google so that I can create an itinerary for my upcoming trip and save it for quick and easy access when I’m traveling.
+
+<ins>Description: </ins><br /><br />
+The user, who has never used the app before, wants to be able to log in using pre-existing credentials for their other accounts (Twitter, Facebook, Google, etc.). When they first open the app, they will be shown the startup/login screen which will consist of the name and favicon for Voyager displayed above a list of buttons for each third-party login option. The user will then select their preferred login option, which will redirect them to their selected platform’s authentication and authorization pages. Upon logging in successfully, the user will gain full access to the app, which will then grab a request token from the platform that the user selected. The app will use this token to fetch the user’s data from the third-party service they chose, which will allow the app to tailor recommendations for locations, events, and attractions the user may enjoy based on their preferences and interests (refer to personalized recommendations story). In case authentication is not successful, the app will display an error message to the user informing them that their login attempt failed and back them out to the startup screen, where they can try again. Note: this login process will be the same for new and returning users alike.
