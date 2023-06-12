@@ -1,0 +1,3 @@
+[submodule "Voyager/front-end"]
+	path = Voyager/front-end
+	url = https://github.com/andrewliu26/voyager-fe
