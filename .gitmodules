@@ -1,6 +1,6 @@
 [submodule "Voyager/front-end"]
 	path = Voyager/front-end
 	url = https://github.com/andrewliu26/voyager-fe
-[submodule "Voyager/back-end"]
-	path = Voyager/back-end
+[submodule "Voyager/back_end"]
+	path = Voyager/back_end
 	url = https://github.com/laimao19/voyager-be
