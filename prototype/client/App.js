@@ -1,12 +1,24 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
 
 export default function App() {
+  const [number, onChangeNumber] = React.useState('');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <Text>Check the weather in:</Text>
+      <TextInput
+        style={styles.input}
+        textAlign={'center'}
+        onChangeText={onChangeNumber}
+        value={number}
+        placeholder="Enter a location"
+        keyboardType="numeric"
+      />
+      
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -16,5 +28,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#e8e8e8',
+    
   },
 });
