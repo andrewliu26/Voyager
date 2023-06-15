@@ -1,5 +1,5 @@
 const weatherConfig = {
-    weatherConfigkey: 'Api key'
+    weatherConfigkey: 'Api krjownsey'
 }
 
 module.exports = weatherConfig;
