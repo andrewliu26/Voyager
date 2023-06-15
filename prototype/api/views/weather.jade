@@ -1,0 +1,52 @@
+doctype html
+html
+    head
+        title Weather App
+        style.
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+            }
+            h1 {
+                margin-bottom: 20px;
+            }
+            #location-input {
+                margin-bottom: 10px;
+            }
+            #weather-result {
+                font-size: 18px;
+            }
+    body
+        h1 Weather App
+        input(type='text', id='location-input', placeholder='Enter location')
+        button(onclick='getWeather()') Get Weather
+        #weather-result
+
+    script.
+        async function getWeather() {
+            const locationInput = document.getElementById('location-input');
+            const location = locationInput.value.trim();
+
+            if (location === '') {
+                alert('Please enter a location');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/weather/${encodeURIComponent(location)}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    const weatherResult = document.getElementById('weather-result');
+                    weatherResult.innerHTML = `
+            <p><strong>Location:</strong> ${data.location}</p>
+            <p><strong>Temperature:</strong> ${data.temperature}&deg;C</p>
+            <p><strong>Weather:</strong> ${data.weatherText}</p>
+          `;
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                alert(error.message);
+            }
+        }
