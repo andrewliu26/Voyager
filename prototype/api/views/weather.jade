@@ -2,51 +2,25 @@ doctype html
 html
     head
         title Weather App
-        style.
-            body {
-                font-family: Arial, sans-serif;
-                text-align: center;
-            }
-            h1 {
-                margin-bottom: 20px;
-            }
-            #location-input {
-                margin-bottom: 10px;
-            }
-            #weather-result {
-                font-size: 18px;
-            }
+        script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+        script.
+            $(document).ready(function() {
+                $('form').submit(function(event) {
+                    event.preventDefault();
+                    var location = $('#location').val();
+                    if (location) {
+                        $.get('/weather/' + location, function(data) {
+                            $('#result').text('Location: ' + data.location + ', Temperature: ' + data.temperature + ', Weather: ' + data.weatherText);
+                        }).fail(function(error) {
+                            $('#result').text('Error: ' + error.responseJSON.error);
+                        });
+                    }
+                });
+            })
     body
         h1 Weather App
-        input(type='text', id='location-input', placeholder='Enter location')
-        button(onclick='getWeather()') Get Weather
-        #weather-result
+        form
+            input(type="text", id="location", placeholder="Enter location", required)
+            button(type="submit") Search
+        div#result
 
-    script.
-        async function getWeather() {
-            const locationInput = document.getElementById('location-input');
-            const location = locationInput.value.trim();
-
-            if (location === '') {
-                alert('Please enter a location');
-                return;
-            }
-
-            try {
-                const response = await fetch(`/weather/${encodeURIComponent(location)}`);
-                const data = await response.json();
-
-                if (response.ok) {
-                    const weatherResult = document.getElementById('weather-result');
-                    weatherResult.innerHTML = `
-            <p><strong>Location:</strong> ${data.location}</p>
-            <p><strong>Temperature:</strong> ${data.temperature}&deg;C</p>
-            <p><strong>Weather:</strong> ${data.weatherText}</p>
-          `;
-                } else {
-                    throw new Error(data.error);
-                }
-            } catch (error) {
-                alert(error.message);
-            }
-        }

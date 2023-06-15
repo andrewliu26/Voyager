@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><title>Weather App</title><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script>$(document).ready(function() {
+    $('form').submit(function(event) {
+        event.preventDefault();
+        var location = $('#location').val();
+        if (location) {
+            $.get('/weather/' + location, function(data) {
+                $('#result').text('Location: ' + data.location + ', Temperature: ' + data.temperature + ', Weather: ' + data.weatherText);
+            }).fail(function(error) {
+                $('#result').text('Error: ' + error.responseJSON.error);
+            });
+        }
+    });
+})</script></head><body><h1>Weather App</h1><form><input type="text" id="location" placeholder="Enter location" required><button type="submit">Search</button></form><div id="result"></div></body></html>
