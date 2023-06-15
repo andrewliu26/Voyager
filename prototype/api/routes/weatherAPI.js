@@ -5,7 +5,7 @@ const weatherConfig = require('../config/weatherConfig');
 const apiKey = weatherConfig.weatherConfigkey;
 
 //weather details and city details
-router.get('/weather/:location', async(req, res, next) => {
+router.get('/:location', async(req, res, next) => {
     try {
         const locationURL = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${req.params.location}`;
         const locationResponse = await fetch(locationURL);

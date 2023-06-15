@@ -1,9 +1,13 @@
 <!DOCTYPE html><html><head><title>Weather App</title><script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script>$(document).ready(function() {
     $('form').submit(function(event) {
         event.preventDefault();
+        console.log('Form submitted');
         var location = $('#location').val();
+        console.log('Location:', location);
         if (location) {
-            $.get('/weather/' + location, function(data) {
+            // Adjust the URL construction here
+            var url = '/weather/' + encodeURIComponent(location);
+            $.get(url, function(data) {
                 $('#result').text('Location: ' + data.location + ', Temperature: ' + data.temperature + ', Weather: ' + data.weatherText);
             }).fail(function(error) {
                 $('#result').text('Error: ' + error.responseJSON.error);
