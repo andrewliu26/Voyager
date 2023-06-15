@@ -21,7 +21,7 @@ export default function App() {
           onPress={() => {console.log('Search pressed')}}
           style={({pressed}) => [
             {
-              backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
+              backgroundColor: pressed ? '#000' : 'white',
             },
             styles.wrapperCustom,
           ]}>
@@ -45,16 +45,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   searchBar: {
-    backgroundcolor: '#A4EE82',
-    width: 200,
+    width: 180,
     height: 100,
     margin: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   searchButton: {
-    backgroundcolor: '#A4EE82',
-    width: 60,
+    width: 50,
     height: 100,
     margin: 10,
     alignItems: 'center',
@@ -63,17 +61,22 @@ const styles = StyleSheet.create({
 
   // Component styles
   input: {
+    color: '#888888',
+    borderColor: '#299BF7',
+    //borderColor: '#bfbfbf',
     padding: 10,
     borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#bfbfbf',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
     margin: 10,
     height: 40,
     width: 200,
   },
   wrapperCustom: {
-    borderRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
     padding: 10,
+    //backgroundColor: '#bfbfbf',
     backgroundColor: '#299BF7',
     height: 40,
     width: 70,
