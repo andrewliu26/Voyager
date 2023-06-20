@@ -1,0 +1,32 @@
+html
+    head
+        title ChatGPT Demo
+    body
+        h1 ChatGPT Demo
+        form(method='POST' action='/chat')
+            input(type='text' name='message' placeholder='Type your message...' required)
+            button(type='submit') Send
+        #response-container
+            p#response
+
+        script(src='https://code.jquery.com/jquery-3.6.0.min.js')
+        script.
+            $(document).ready(function() {
+                $('form').submit(function(event) {
+                    event.preventDefault();
+                    var message = $('input[name="message"]').val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/chat',
+                        data: { message: message },
+                        success: function(response) {
+                            $('#response').text(response.message);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            $('#response').text('Error: Something went wrong.');
+                        }
+                    });
+                });
+            });
