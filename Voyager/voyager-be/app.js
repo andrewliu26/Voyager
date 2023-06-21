@@ -9,6 +9,8 @@ var indexRouter = require('../../../voyager-be/routes');
 var usersRouter = require('../../../voyager-be/routes/users');
 const chatGPTRouter = require('../../../voyager-be/routes/chatGPTAPI');
 
+const PORT = 3000;
+
 var app = express();
 
 // view engine setup
@@ -40,6 +42,10 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 module.exports = app;
