@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import { View, SafeAreaView, StyleSheet, Text, TextInput, Button } from 'react-native';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
+
 
 const App = () => {
     const handleFacebookLogin = async () => {
@@ -19,12 +19,6 @@ const App = () => {
             console.log(error);
         }
     };
-
-    return (
-        <View>
-            <Button title="Login with Facebook" onPress={handleFacebookLogin} />
-        </View>
-    );
 
   const [userMessage, setUserMessage] = useState('');
   const [itinerary, setItinerary] = useState('');
@@ -47,6 +41,12 @@ const App = () => {
           justifyContent: 'center',
       },
   });
+
+  return (
+      <SafeAreaView style={styles.container}>
+          <Button title="Login with Facebook" onPress={handleFacebookLogin} />
+      </SafeAreaView>
+  );
 
   return (
       <SafeAreaView style={styles.container}>

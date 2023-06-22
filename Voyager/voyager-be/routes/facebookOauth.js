@@ -6,7 +6,7 @@ const facebookConfig = require('../config/facebookConfig');
 const router = express.Router();
 
 passport.use(new FaceBookStrategy({
-    clientID: facebookConfig.facebookclientID,
+    clientID: facebookConfig.facebookClientID,
     clientSecret: facebookConfig.facebookclientSecret,
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
 }, (accessToken, refreshToken, profile, done) => {
