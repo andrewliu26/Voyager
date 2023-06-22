@@ -1,2 +1,4 @@
 node_modules/
 config/chatGPTConfig.js
+config/facebookConfig.js
+
