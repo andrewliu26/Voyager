@@ -3,8 +3,11 @@ import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import { View, SafeAreaView, StyleSheet, Text, TextInput, Button } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { firebase } from '@react-native-firebase/auth'
 import { LoginManager, AccessToken } from "react-native-fbsdk";
 
+LoginManager.setLoginBehavior('web_only');
+firebase.auth().useDeviceLanguage();
 
 const App = () => {
     const handleFacebookLogin = async () => {
