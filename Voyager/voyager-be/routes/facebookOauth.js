@@ -1,12 +1,13 @@
 const express = require('express');
 const passport = require('passport');
 const FaceBookStrategy = require('passport-facebook').Strategy;
+const facebookConfig = require('../config/facebookConfig');
 
 const router = express.Router();
 
 passport.use(new FaceBookStrategy({
-    clientID: 'YOUR_FACEBOOK_APP_ID',
-    clientSecret: 'YOUR_FACEBOOK_APP_SECRET',
+    clientID: facebookConfig.facebookclientID,
+    clientSecret: facebookConfig.facebookclientSecret,
     callbackURL: 'http://localhost:3000/auth/facebook/callback'
 }, (accessToken, refreshToken, profile, done) => {
     //Handle user authentication or registration logic here
