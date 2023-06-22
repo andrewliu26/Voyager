@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import { View, SafeAreaView, StyleSheet, Text, TextInput, Button } from 'react-native';
-
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 const App = () => {
     const handleFacebookLogin = async () => {
