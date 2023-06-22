@@ -2,8 +2,30 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios';
 import { View, SafeAreaView, StyleSheet, Text, TextInput, Button } from 'react-native';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 const App = () => {
+    const handleFacebookLogin = async () => {
+        try {
+            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+            if (result.isCancelled) {
+                console.log('User cancelled the login process');
+            } else {
+                const tokenData = await AccessToken.getCurrentAccessToken();
+                console.log(tokenData.accessToken);
+                // Send the access token to the backend for authentication
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    return (
+        <View>
+            <Button title="Login with Facebook" onPress={handleFacebookLogin} />
+        </View>
+    );
+
   const [userMessage, setUserMessage] = useState('');
   const [itinerary, setItinerary] = useState('');
 
@@ -53,6 +75,7 @@ const App = () => {
           </View>
       </SafeAreaView>
   );
+
 };
 
 export default App;

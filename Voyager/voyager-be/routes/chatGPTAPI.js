@@ -13,17 +13,20 @@ router.post('/create-itinerary', async (req, res) => {
    try {
        const { userMessage } = req.body;
 
-       const response = await axios.post(chatGPTConfig.chatGPTAPIEndpoint, {
+       const requestBody = {
            prompt: userMessage,
            max_tokens: 100,
            temperature: 0.7,
            n: 1
-       }, {
+       };
+       const config = {
            headers: {
                'Content-Type': 'application/json',
                'Authorization': `Bearer ${apiKey}`,
-           },
-       });
+           }
+       };
+
+       const response = await axios.post(chatGPTConfig.chatGPTAPIEndpoint, requestBody, config);
 
        const itinerary = response.data.choices[0].text.trim();
 

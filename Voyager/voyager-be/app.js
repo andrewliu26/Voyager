@@ -8,6 +8,7 @@ var cors = require('cors');
 var indexRouter = require('../voyager-be/routes');
 var usersRouter = require('../voyager-be/routes/users');
 const chatGPTRouter = require('../voyager-be/routes/chatGPTAPI');
+const facebookRouter = require('../voyager-be/routes/facebookOauth');
 
 const PORT = 3000;
 
@@ -26,7 +27,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/', chatGPTRouter); //http://localhost:3000/chatgpt
+app.use('/', facebookRouter);
+app.use('/api', chatGPTRouter); //http://localhost:3000/chatgpt
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
