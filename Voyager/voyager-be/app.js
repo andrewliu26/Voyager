@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var cors = require('cors');
-var indexRouter = require('../../../voyager-be/routes');
-var usersRouter = require('../../../voyager-be/routes/users');
-const chatGPTRouter = require('../../../voyager-be/routes/chatGPTAPI');
+var indexRouter = require('../voyager-be/routes');
+var usersRouter = require('../voyager-be/routes/users');
+const chatGPTRouter = require('../voyager-be/routes/chatGPTAPI');
 
 const PORT = 3000;
 
