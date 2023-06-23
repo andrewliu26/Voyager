@@ -1,88 +1,69 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import axios from 'axios';
-import { View, SafeAreaView, StyleSheet, Text, TextInput, Button } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import { firebase } from '@react-native-firebase/auth'
-import { LoginManager, AccessToken } from "react-native-fbsdk";
+import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
-LoginManager.setLoginBehavior('web_only');
-firebase.auth().useDeviceLanguage();
+WebBrowser.maybeCompleteAuthSession();
 
-const App = () => {
-    const handleFacebookLogin = async () => {
-        try {
-            const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-            if (result.isCancelled) {
-                console.log('User cancelled the login process');
-            } else {
-                const tokenData = await AccessToken.getCurrentAccessToken();
-                const credential = auth.FacebookAuthProvider.credential(tokenData.accessToken);
-                await auth().signInWithCredential(credential);
-                console.log(tokenData.accessToken);
-                // Send the access token to the backend for authentication
+export default function App() {
+    const [userInfo, setUserInfo] = React.useState(null);
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        androidClientId: "636177256083-ccjve1n5s5ed2ejtokqnkdjnrbm0gj7v.apps.googleusercontent.com",
+        iosClientId: "636177256083-s2ldqqukpdcir8vif2sa92230ghjruj6.apps.googleusercontent.com",
+        webClientId: "636177256083-gg378vm7uolq5ghbkldui7or2mcm05m6.apps.googleusercontent.com",
+    });
+
+    React.useEffect(() => { handleGoogleSignIn(); }, [response]);
+
+    async function handleGoogleSignIn() {
+        const user = await asyncStorage.getItem("@user");
+        if (!user) {
+            // make request
+            if (response?.type === "success") {
+                await getUserInfo(response.authentication.accessToken);
             }
-        } catch (error) {
-            console.log(error);
+        }
+        else {
+            // look for user object
+            setUserInfo(JSON.parse(user));
+        }
+    }
+
+    const getUserInfo = async (token) => {
+        if (!token) return;
+        try {
+            const response = await fetch(
+                "https://www.googleapis.com/userinfo/v2/me",
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                }
+            );
+            const user = await response.json();
+            await AsyncStorage.setItem("@user", JSON.stringify(user));
+            setUserInfo(user);
+        }
+        catch (error) {
         }
     };
 
-  const [userMessage, setUserMessage] = useState('');
-  const [itinerary, setItinerary] = useState('');
+    return (
+        <View style={styles.container}>
+            <Text>{JSON.stringify(userInfo, null, 2)}</Text>
+            <Button title="Sign in with Google" onPress={() => promptAsync} />
+            <Button title="Sign out of Google" onPress={() => AsyncStorage.removeItem("@user")} />
+            <StatusBar style="auto" />
+        </View>
+    );
+}
 
-  const handleCreateItinerary = async () => {
-    try {
-      const response = await axios.post('http://localhost:3000/create-itinerary', { userMessage });
-      setItinerary(response.data.itinerary);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // styles for components
-  const styles = StyleSheet.create({
-      container: {
-          flex: 1,
-          backgroundColor: '#fff',
-          alignItems: 'center',
-          justifyContent: 'center',
-      },
-  });
-
-  return (
-      <SafeAreaView style={styles.container}>
-          <Button title="Login with Facebook" onPress={handleFacebookLogin} />
-      </SafeAreaView>
-  );
-
-  return (
-      <SafeAreaView style={styles.container}>
-          <View style={{ width: '100%', flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
-
-          </View>
-          <View style={{ width: '100%', flex: 5, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' }}>
-              <TextInput
-                  style={{ width: 200,
-                      height: 40,
-                      padding: 10,
-                      margin: 10,
-                      borderRadius: 10,
-                      borderColor: 'gray',
-                      borderWidth: 1
-                  }}
-                  onChangeText={text => setUserMessage(text)}
-                  value={userMessage}
-                  placeholder="Enter a message"
-              />
-              <Button title="Create Itinerary" onPress={handleCreateItinerary} />
-          </View>
-          <View style={{ width: '100%', flex: 3, backgroundColor: '#fff', alignItems: 'center' }}>
-              <Text>Generated Itinerary:</Text>
-              <Text>{itinerary}</Text>
-          </View>
-      </SafeAreaView>
-  );
-
-};
-
-export default App;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});
