@@ -45,21 +45,6 @@ router.post('/generate-itinerary',  (req, res) => {
     const generatedItinerary = `Generated itinerary based on '${inputText}'`;
 
     res.json({generatedItinerary});
-
-    /*try {
-
-       const { userMessage } = req.body;
-
-
-       const response = await axios.post(chatGPTConfig.chatGPTAPIEndpoint, requestBody, config);
-
-       const itinerary = response.data.choices[0].text.trim();
-
-   } catch(error) {
-       console.error('Error:', error.message);
-       res.status(500).json({error: 'Something went wrong. '});
-   }*/
-
 });
 
 router.post('/save-itinerary', (req, res) => {

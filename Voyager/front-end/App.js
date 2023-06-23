@@ -3,15 +3,26 @@ import { SafeAreaView, View, Text, Button, TextInput } from 'react-native';
 import { generateItinerary } from "./api";
 
 const GeneratingItinerariesScreen = () => {
-    const [inputText, setInputText ] = useState('');
+   // const [inputText, setInputText ] = useState('');
     const [generatedItinerary, setGeneratedItinerary] = useState('');
 
-    const handleGenerateItinerary = async () => {
+    /*const handleGenerateItinerary = async () => {
         try {
             const itinerary = await generateItinerary(inputText);
             setGeneratedItinerary(itinerary);
         } catch (error) {
             console.error('Error generating itinerary:', error);
+        }
+    };*/
+
+    const handleGenerateItinerary = async (duration, location) => {
+        const inputText = `Generate a ${duration}-day itinerary for ${location}`;
+
+        try {
+            const itinerary = await generateItinerary(inputText);
+            setGeneratedItinerary(itinerary);
+        } catch {
+            console.error('Error generating itinerary: ', error);
         }
     };
 
@@ -22,12 +33,15 @@ const GeneratingItinerariesScreen = () => {
             flex: 1,
         }}>
             <Text>Generate Your Itinerary</Text>
-            <TextInput
-                placeholder="Enter your preferences"
-                value={inputText}
-                onChangeText={setInputText}
-            />
-            <Button title="Generate" onPress={handleGenerateItinerary} />
+            <View style={{ marginVertical: 10 }}>
+                <Button title="7-day Itinerary" onPress={() => handleGenerateItinerary(7, 'New York')} />
+            </View>
+            <View style={{ marginVertical: 10 }}>
+                <Button title="14-day Itinerary" onPress={() => handleGenerateItinerary(14, 'New York')} />
+            </View>
+            <View style={{ marginVertical: 10 }}>
+                <Button title="Search Itinerary" onPress={() => handleGenerateItinerary(7, 'Enter Location')} />
+            </View>
             <Text>{generatedItinerary}</Text>
         </SafeAreaView>
     );
