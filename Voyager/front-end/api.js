@@ -44,3 +44,14 @@ export const getSavedItineraries = async () => {
         throw error;
     }
 };
+
+export const searchLocation = async (location) => {
+    try {
+        const response = await fetch(`${BASE_URL}/search-location?query=${encodeURIComponent(location)}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error searching location:', error);
+        throw error;
+    }
+};

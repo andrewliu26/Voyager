@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fetch = require('isomorphic-fetch');
 const chatGPTConfig = require('../config/chatGPTConfig');
 const { Configuration, OpenAIApi } = require('openai');
 const readline = require('readline');
@@ -8,6 +9,9 @@ const cors = require('cors');
 const axios = require('axios');
 const mongoose = require('mongoose');
 const { itinerarySchema, Itinerary , findAll, saveItinerary} = require('../files/itinerary');
+const weatherConfig = require('../config/weatherConfig');
+
+
 
 const apiKey = chatGPTConfig.chatGPTkey;
 
@@ -25,7 +29,10 @@ itinerarySchema.statics.findAll = function () {
 
 router.use(bodyParser.json());
 
-router.post('/generate-itinerary',  (req, res) => {
+
+
+router.post('/generate-itinerary',  async (req, res) => {
+
     const { itineraryLength, location } = req.body;
 
     const inputText = `Generate a ${itineraryLength}-day itinerary for ${location}`;
@@ -74,6 +81,28 @@ router.get('/saved-itineraries', (req, res) => {
             console.error('Error retrieving saved itineraries: ', error);
             res.status(500).json({ error: 'Failed to retrieve saved itineraries'});
         });
+});
+
+router.get('/search-location', async (req, res) => {
+    const { query } = req.query;
+
+    try {
+        const response = await axios.get(
+            'http://dataservice.accuweather.com/locations/v1/cities/search',
+            {
+                params: {
+                    apiKey: weatherConfig.apiKey,
+                    q: query,
+                },
+            }
+        );
+
+        const locations = response.data[0];
+        res.json({locations});
+    } catch(error) {
+        console.error('Error searching for location:', error);
+        res.status(500).json({error: 'Failed to search location'});
+    }
 });
 
 module.exports = router;

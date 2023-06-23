@@ -1,30 +1,43 @@
 import React, { useState } from 'react';
 import { SafeAreaView, View, Text, Button, TextInput } from 'react-native';
-import { generateItinerary } from "./api";
+import { generateItinerary, searchLocation } from "./api";
 
 const GeneratingItinerariesScreen = () => {
    // const [inputText, setInputText ] = useState('');
+    const [locationInput, setLocationInput] = useState('');
     const [generatedItinerary, setGeneratedItinerary] = useState('');
 
-    /*const handleGenerateItinerary = async () => {
+    const handleGenerateItinerary = async (itineraryLength, location) => {
         try {
-            const itinerary = await generateItinerary(inputText);
+            let locations = [];
+
+            if (location === 'Enter Location') {
+                if (locationInput.trim() !== '') {
+                    // Search for the location based on user input
+                    const searchResults = await searchLocation(locationInput);
+                    locations = searchResults.locations;
+                } else {
+                    // Show an error message or handle empty location input
+                    console.error('Empty location input');
+                    return;
+                }
+            }
+
+            const itinerary = await generateItinerary(itineraryLength, locations);
             setGeneratedItinerary(itinerary);
         } catch (error) {
             console.error('Error generating itinerary:', error);
         }
-    };*/
 
-    const handleGenerateItinerary = async (duration, location) => {
-        const inputText = `Generate a ${duration}-day itinerary for ${location}`;
-
-        try {
-            const itinerary = await generateItinerary(inputText);
+        /* try {
+            const { locations } = await searchLocation(location);
+            const itinerary = await generateItinerary(itineraryLength, locations);
             setGeneratedItinerary(itinerary);
-        } catch {
-            console.error('Error generating itinerary: ', error);
-        }
+        } catch (error) {
+            console.error('Error generating itinerary:', error);
+        }*/
     };
+
 
     return (
         <SafeAreaView style={{
@@ -40,7 +53,19 @@ const GeneratingItinerariesScreen = () => {
                 <Button title="14-day Itinerary" onPress={() => handleGenerateItinerary(14, 'New York')} />
             </View>
             <View style={{ marginVertical: 10 }}>
-                <Button title="Search Itinerary" onPress={() => handleGenerateItinerary(7, 'Enter Location')} />
+                <TextInput
+                    placeholder="Enter Location"
+                    value={locationInput}
+                    onChangeText={setLocationInput}
+                    style={{
+                        borderWidth: 1,
+                        borderColor: 'gray',
+                        borderRadius: 5,
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                        marginBottom: 10,
+                    }}
+                />
             </View>
             <Text>{generatedItinerary}</Text>
         </SafeAreaView>
