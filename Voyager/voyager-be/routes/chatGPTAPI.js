@@ -5,13 +5,14 @@ const chatGPTConfig = require('../config/chatGPTConfig');
 const { Configuration, OpenAIApi } = require('openai');
 const readline = require('readline');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const axios = require('axios');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { itinerarySchema, Itinerary , findAll, saveItinerary} = require('../files/itinerary');
 const weatherConfig = require('../config/weatherConfig');
 
 
+router.use(cors());
 
 const apiKey = chatGPTConfig.chatGPTkey;
 

@@ -29,13 +29,6 @@ const GeneratingItinerariesScreen = () => {
             console.error('Error generating itinerary:', error);
         }
 
-        /* try {
-            const { locations } = await searchLocation(location);
-            const itinerary = await generateItinerary(itineraryLength, locations);
-            setGeneratedItinerary(itinerary);
-        } catch (error) {
-            console.error('Error generating itinerary:', error);
-        }*/
     };
 
 
