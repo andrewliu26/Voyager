@@ -3,9 +3,23 @@ const passport = require('passport');
 const FaceBookStrategy = require('passport-facebook').Strategy;
 const facebookConfig = require('../config/facebookConfig');
 const { User, findOne, save } = require('../files/fbUser');
+const mongoose = require('mongoose');
 
 
 const router = express.Router();
+
+mongoose.connect('mongodb://127.0.0.1/fb_database', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err);
+    });
+
+
 
 passport.use(new FaceBookStrategy({
     clientID: facebookConfig.facebookClientID,
