@@ -25,7 +25,7 @@ itinerarySchema.statics.findAll = function () {
 
 router.use(bodyParser.json());
 
-router.post('/create-itinerary', async (req, res) => {
+router.post('/generate-itinerary',  (req, res) => {
     const { itineraryLength, location } = req.body;
 
     const inputText = `Generate a ${itineraryLength}-day itinerary for ${location}`;

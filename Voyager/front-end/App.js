@@ -1,4 +1,42 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Button, TextInput } from 'react-native';
+import { generateItinerary } from "./api";
+
+const GeneratingItinerariesScreen = () => {
+    const [inputText, setInputText ] = useState('');
+    const [generatedItinerary, setGeneratedItinerary] = useState('');
+
+    const handleGenerateItinerary = async () => {
+        try {
+            const itinerary = await generateItinerary(inputText);
+            setGeneratedItinerary(itinerary);
+        } catch (error) {
+            console.error('Error generating itinerary:', error);
+        }
+    };
+
+    return (
+        <SafeAreaView style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+        }}>
+            <Text>Generate Your Itinerary</Text>
+            <TextInput
+                placeholder="Enter your preferences"
+                value={inputText}
+                onChangeText={setInputText}
+            />
+            <Button title="Generate" onPress={handleGenerateItinerary} />
+            <Text>{generatedItinerary}</Text>
+        </SafeAreaView>
+    );
+}
+
+export default GeneratingItinerariesScreen;
+
+
+/*import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
@@ -68,4 +106,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-});
+});*/

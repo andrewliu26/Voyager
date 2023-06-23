@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 const router = express.Router();
 
-mongoose.connect('mongodb://127.0.0.1/fb_database', {
+/*mongoose.connect('mongodb://127.0.0.1/fb_database', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
@@ -17,7 +17,7 @@ mongoose.connect('mongodb://127.0.0.1/fb_database', {
     })
     .catch((err) => {
         console.error('Error connecting to MongoDB:', err);
-    });
+    });*/
 
 
 
