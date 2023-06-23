@@ -6,7 +6,7 @@ import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
-const googleConfig = require('/config/googleConfig');
+const googleConfig = require('./config/googleConfig');
 
 WebBrowser.maybeCompleteAuthSession();
 
