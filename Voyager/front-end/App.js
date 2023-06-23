@@ -6,14 +6,16 @@ import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
+const googleConfig = require('/config/googleConfig');
+
 WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
     const [userInfo, setUserInfo] = React.useState(null);
     const [request, response, promptAsync] = Google.useAuthRequest({
-        androidClientId: "636177256083-ccjve1n5s5ed2ejtokqnkdjnrbm0gj7v.apps.googleusercontent.com",
-        iosClientId: "636177256083-s2ldqqukpdcir8vif2sa92230ghjruj6.apps.googleusercontent.com",
-        webClientId: "636177256083-gg378vm7uolq5ghbkldui7or2mcm05m6.apps.googleusercontent.com",
+        androidClientId: googleConfig.androidKey,
+        iosClientId: googleConfig.iosKey,
+        webClientId: googleConfig.webKey,
     });
 
     React.useEffect(() => { handleGoogleSignIn(); }, [response]);
