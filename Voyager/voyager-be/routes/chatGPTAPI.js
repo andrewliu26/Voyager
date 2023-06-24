@@ -78,14 +78,13 @@ router.get('/search-location', async (req, res) => {
     const { query } = req.query;
 
     try {
-        const response = await axios.get(
+        const locationResponse = await axios.get(
             'http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=' + weatherConfig.apiKey + '&q=' + query,
         );
 
-        const locationsData = await response.json();
-
-        const locations = locationsData.LocalizedName[0];
-        res.json({locations});
+       // const locations = locationResponse.data.map((location) => location.LocalizedName);
+        const firstLocation = locationResponse.data[0]?.LocalizedName;
+        res.json({firstLocation});
     } catch(error) {
         console.error('Error searching for location:', error);
         res.status(500).json({error: 'Failed to search location'});
