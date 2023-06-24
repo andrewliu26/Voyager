@@ -10,7 +10,7 @@ export const generateItinerary = async (inputText) => {
             body: JSON.stringify({ inputText }),
         });
         const data = await response.json();
-        return data.generatedItinerary;
+        return data.query;
     } catch(error) {
         console.error('Error generating itinerary:', error);
         throw error;

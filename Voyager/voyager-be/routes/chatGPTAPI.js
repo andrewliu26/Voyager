@@ -10,6 +10,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { itinerarySchema, Itinerary , findAll, saveItinerary} = require('../files/itinerary');
 const weatherConfig = require('../config/weatherConfig');
+const openaiClient = require('openai');
+const generate = require("../files/generate");
 
 
 router.use(cors());
@@ -33,26 +35,14 @@ router.use(bodyParser.json());
 
 
 router.post('/generate-itinerary',  async (req, res) => {
-
     const { itineraryLength, location } = req.body;
-
-    const inputText = `Generate a ${itineraryLength}-day itinerary for ${location}`;
-    const requestBody = {
-        prompt: inputText,
-        max_tokens: 100,
-        temperature: 0.7,
-        n: 1
-    };
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        }
-    };
-
-    const generatedItinerary = `Generated itinerary based on '${inputText}'`;
-
-    res.json({generatedItinerary});
+    try {
+    const query = await generate(itineraryLength, location);
+        res.json({response: query});
+    } catch(error) {
+        console.error(error)
+        res.status(500).send("Internal server error");
+    }
 });
 
 router.post('/save-itinerary', (req, res) => {
@@ -98,7 +88,7 @@ router.get('/search-location', async (req, res) => {
             }
         );
 
-        const locations = response.data[0];
+        const locations = response.data.choices[0];
         res.json({locations});
     } catch(error) {
         console.error('Error searching for location:', error);
