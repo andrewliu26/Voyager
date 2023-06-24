@@ -47,8 +47,7 @@ export const getSavedItineraries = async () => {
 
 export const searchLocation = async (query) => {
     try {
-        const response = await fetch(`${BASE_URL}/search-location?query=London`);
-        //=${encodeURIComponent(query)}
+        const response = await fetch(`${BASE_URL}/search-location?query=${encodeURIComponent(query)}`);
         const data = await response.json();
         return data.firstLocation;
     } catch (error) {
