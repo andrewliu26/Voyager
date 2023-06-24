@@ -7,7 +7,7 @@ export const generateItinerary = async (itineraryLength, locations) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ itineraryLength, locations }),
+            body: {itineraryLength, locations},
         });
         const data = await response.json();
         return data.query;
@@ -45,13 +45,13 @@ export const getSavedItineraries = async () => {
     }
 };
 
-export const searchLocation = async (location) => {
+export const searchLocation = async (query) => {
     try {
-        const response = await fetch(`${BASE_URL}/search-location?query=${encodeURIComponent(location)}`);
+        const response = await fetch(`${BASE_URL}/search-location?query=${encodeURIComponent(query)}`);
         const data = await response.json();
-        return data;
+        return data.locations;
     } catch (error) {
-        console.error('Error searching location:', error);
+        console.error('Error searching location in Api.js:', error);
         throw error;
     }
 };

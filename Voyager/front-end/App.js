@@ -9,19 +9,9 @@ const GeneratingItinerariesScreen = () => {
 
     const handleGenerateItinerary = async (itineraryLength, location) => {
         try {
-            let locations = [];
-
-            if (location === 'Enter Location') {
-                if (locationInput.trim() !== '') {
-                    // Search for the location based on user input
-                    const searchResults = await searchLocation(locationInput);
-                    locations = searchResults.locations;
-                } else {
-                    // Show an error message or handle empty location input
-                    console.error('Empty location input');
-                    return;
-                }
-            }
+            const searchResults = await searchLocation(location);
+            let locations;
+            locations = searchResults.locations;
 
             const itinerary = await generateItinerary(itineraryLength, locations);
             return itinerary.response;
