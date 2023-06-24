@@ -7,7 +7,7 @@ export const generateItinerary = async (itineraryLength, locations) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: {itineraryLength, locations},
+            body: JSON.stringify({itineraryLength, locations}),
         });
         const data = await response.json();
         //console.log(data);
