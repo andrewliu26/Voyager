@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, Button, TextInput } from 'react-native';
 import { generateItinerary, searchLocation } from "./api";
 
 const GeneratingItinerariesScreen = () => {
-   // const [inputText, setInputText ] = useState('');
+    //const [inputText, setInputText ] = useState('');
     const [locationInput, setLocationInput] = useState('');
     const [generatedItinerary, setGeneratedItinerary] = useState('');
 
@@ -14,7 +14,10 @@ const GeneratingItinerariesScreen = () => {
             locations = searchResults.locations;
 
             const itinerary = await generateItinerary(itineraryLength, locations);
-            return itinerary.response;
+            //console.log(itinerary);
+            setGeneratedItinerary(JSON.stringify(itinerary));
+            return itinerary;
+            //return itinerary?.response;
         } catch (error) {
             console.error('Error generating itinerary on App.js:', error);
         }
