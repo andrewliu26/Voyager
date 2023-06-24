@@ -1,18 +1,18 @@
 const BASE_URL = 'http://localhost:3000/api'
 
-export const generateItinerary = async (inputText) => {
+export const generateItinerary = async (itineraryLength, locations) => {
     try {
         const response = await fetch(`${BASE_URL}/generate-itinerary`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ inputText }),
+            body: JSON.stringify({ itineraryLength, locations }),
         });
         const data = await response.json();
         return data.query;
     } catch(error) {
-        console.error('Error generating itinerary:', error);
+        console.error('Error generating itinerary on api.js:', error);
         throw error;
     }
 };

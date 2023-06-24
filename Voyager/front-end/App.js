@@ -24,9 +24,9 @@ const GeneratingItinerariesScreen = () => {
             }
 
             const itinerary = await generateItinerary(itineraryLength, locations);
-            setGeneratedItinerary(itinerary);
+            return itinerary.response;
         } catch (error) {
-            console.error('Error generating itinerary:', error);
+            console.error('Error generating itinerary on App.js:', error);
         }
 
     };
