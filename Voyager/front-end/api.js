@@ -10,7 +10,9 @@ export const generateItinerary = async (itineraryLength, locations) => {
             body: {itineraryLength, locations},
         });
         const data = await response.json();
-        return data.query;
+        //console.log(data);
+        return data;
+        //return data.query;
     } catch(error) {
         console.error('Error generating itinerary on api.js:', error);
         throw error;
