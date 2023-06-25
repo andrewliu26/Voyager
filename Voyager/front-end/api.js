@@ -1,5 +1,5 @@
-const chatGPTConfig = require('../voyager-be/config/chatGPTConfig');
-const BASE_URL = chatGPTConfig.apiServer;
+import ipConfig from "./config/ipConfig"
+const BASE_URL = ipConfig.apiServer;
 
 export const generateItinerary = async (itineraryLength, locations) => {
     try {

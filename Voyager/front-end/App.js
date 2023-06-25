@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image} from "react-native";
 import { generateItinerary, searchLocation } from "./api";
-import chatGPTConfig from "../voyager-be/config/chatGPTConfig"
+import ipConfig from "./config/ipConfig"
 
-const hostServer = chatGPTConfig.hostServer;
+const hostServer = ipConfig.hostServer;
 
 
 export default function GeneratingItinerariesScreen () {
@@ -29,7 +29,7 @@ export default function GeneratingItinerariesScreen () {
             //setResult(JSON.stringify(itinerary));
             //return itinerary?.response;
             console.log(JSON.stringify({lengthInput, locationInput}));
-            const response = await fetch(hostServer, {
+            const response = await fetch(ipConfig.hostServer, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
