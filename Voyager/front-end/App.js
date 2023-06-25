@@ -1,31 +1,109 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, Button, TextInput } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image} from "react-native";
 import { generateItinerary, searchLocation } from "./api";
 
-const GeneratingItinerariesScreen = () => {
+
+export default function GeneratingItinerariesScreen () {
     //const [inputText, setInputText ] = useState('');
     const [locationInput, setLocationInput] = useState('');
+    const [lengthInput, setLengthInput] = useState('');
     const [generatedItinerary, setGeneratedItinerary] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [result, setResult] = useState();
 
-    const handleGenerateItinerary = async (itineraryLength, location) => {
-        try {
-            const searchResults = await searchLocation(location);
-            let locations;
-            locations = searchResults.locations;
-
-            const itinerary = await generateItinerary(itineraryLength, locations);
-            //console.log(itinerary);
-            setGeneratedItinerary(JSON.stringify(itinerary));
-            return itinerary;
-            //return itinerary?.response;
-        } catch (error) {
-            console.error('Error generating itinerary on App.js:', error);
+    const onSubmit = async () => {
+        if (loading) {
+            return (
+                <View style={styles.loadingContainer}>
+                    <Text style={styles.title}>Generating a new Itinerary</Text>
+                </View>
+            );
         }
-
+        setLoading(true);
+        setResult('');
+        try {
+            const response = await fetch(`http://localhost:3000/api/generate-itinerary`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({lengthInput, locationInput}),
+            });
+            const data = await response.json();
+            setResult(data.response);
+        } catch (e) {
+            Alert.alert("Couldn't generate itinerary", e.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
+    const onTryAgain = () => {
+        setResult('');
+    };
+
+    if (result) {
+        return (
+            <SafeAreaView style={styles.container}>
+                <Text style={styles.title}>
+                    Here is your generated itinerary 💡
+                </Text>
+                <Text style={styles.result}>{result}</Text>
+                <Pressable onPress={onTryAgain} style={styles.button}>
+                    <Text style={styles.buttonText}>Try again</Text>
+                </Pressable>
+            </SafeAreaView>
+        );
+    }
 
     return (
+        <SafeAreaView style={{flex: 1}}>
+            <View style={styles.container}>
+
+                <Text style={styles.label}>Itinerary Length</Text>
+                <TextInput
+                    placeholder="Days"
+                    keyboardType="numeric"
+                    style={styles.input}
+                    value={lengthInput.toString()}
+                    onChangeText={(s) => setLengthInput(Number.parseInt(s))}
+                />
+
+                <Text style={styles.label}>Location Input</Text>
+                <TextInput
+                    placeholder="Location"
+                    style={styles.input}
+                    value={locationInput}
+                    onChangeText={setLocationInput}
+                />
+                <Pressable onPress={onSubmit} style={styles.button}>
+                    <Text style={styles.buttonText}>Generate itinerary</Text>
+                </Pressable>
+                <StatusBar style="auto"/>
+            </View>
+        </SafeAreaView>
+    );
+
+    /* const handleGenerateItinerary = async (itineraryLength, location) => {
+         try {
+             const searchResults = await searchLocation(location);
+             let locations;
+             locations = searchResults.locations;
+
+             const itinerary = await generateItinerary(itineraryLength, locations);
+             //console.log(itinerary);
+             setGeneratedItinerary(JSON.stringify(itinerary));
+             return itinerary;
+             //return itinerary?.response;
+         } catch (error) {
+             console.error('Error generating itinerary on App.js:', error);
+         }
+
+     };*/
+
+
+    /*return (
         <SafeAreaView style={{
             alignItems: 'center',
             justifyContent: 'center',
@@ -55,10 +133,76 @@ const GeneratingItinerariesScreen = () => {
             </View>
             <Text>{generatedItinerary}</Text>
         </SafeAreaView>
-    );
+    );*/
 }
 
-export default GeneratingItinerariesScreen;
+const styles= StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fff",
+        justifyContent: "center",
+        margin: 10,
+    },
+
+    title: {
+        fontSize: 22,
+        fontWeight: "bold",
+    },
+
+    input:{
+        fontSize: 16,
+        borderColor: '#353740',
+        borderWidth: 1,
+        borderRadius: 4,
+        padding: 16,
+        marginTop: 6,
+        marginBottom: 12
+    },
+    label:{
+        fontSize: 16,
+        color: "gray",
+    },
+
+    selectorContainer:{
+        flexDirection: "row",
+    },
+
+    selector: {
+        flex: 1,
+        textAlign: "center",
+        backgroundColor: "gainsboro",
+        margin: 5,
+        padding: 16,
+        borderRadius: 5,
+        overflow: "hidden",
+    },
+
+    button: {
+        marginTop: "auto",
+        backgroundColor: "#10a37f",
+        padding: 16,
+        borderRadius: 4,
+        alignItems: "center",
+        marginVertical: 6,
+    },
+    buttonText: {
+        color: "white",
+        fontWeight: "bold",
+    },
+
+    loadingContainer: {
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        padding: 10,
+    },
+    loading: {
+        width: "100%",
+    },
+
+});
+
+//export default GeneratingItinerariesScreen;
 
 
 /*import * as React from 'react';
