@@ -18,6 +18,9 @@ router.use(cors());
 
 const apiKey = chatGPTConfig.chatGPTkey;
 
+router.use(bodyParser.urlencoded({extended: false}))
+router.use(bodyParser.json());
+
 mongoose.connect('mongodb://127.0.0.1/travelitinerary', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Connected to MongoDB'))
     .catch((error) => console.error('Error connecting to MongoDB: ', error));
@@ -30,12 +33,15 @@ itinerarySchema.statics.findAll = function () {
     return this.find();
 }
 
-router.use(bodyParser.json());
 
 
 
 router.post('/generate-itinerary',  async (req, res) => {
-    const { itineraryLength, location } = req.body;
+    //const { itineraryLength, location } = req.body;
+    const itineraryLength = req.body.lengthInput;
+    const location = req.body.locationInput;
+
+    console.log(itineraryLength, location);
     try {
     const query = await generate(itineraryLength, location);
         res.json({response: query});

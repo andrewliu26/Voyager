@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image} from "react-native";
 import { generateItinerary, searchLocation } from "./api";
+import chatGPTConfig from "../voyager-be/config/chatGPTConfig"
+
+const hostServer = chatGPTConfig.hostServer;
 
 
 export default function GeneratingItinerariesScreen () {
@@ -10,20 +13,23 @@ export default function GeneratingItinerariesScreen () {
     const [lengthInput, setLengthInput] = useState('');
     const [generatedItinerary, setGeneratedItinerary] = useState('');
     const [loading, setLoading] = useState(false);
-    const [result, setResult] = useState();
+    const [result, setResult] = useState('');
 
     const onSubmit = async () => {
         if (loading) {
-            return (
-                <View style={styles.loadingContainer}>
-                    <Text style={styles.title}>Generating a new Itinerary</Text>
-                </View>
-            );
+            return;
         }
         setLoading(true);
         setResult('');
         try {
-            const response = await fetch(`http://localhost:3000/api/generate-itinerary`, {
+            //const itinerary = await generateItinerary(lengthInput, locationInput);
+            //console.log(itinerary);
+           // setGeneratedItinerary(JSON.stringify(itinerary));
+            //return itinerary;
+            //setResult(JSON.stringify(itinerary));
+            //return itinerary?.response;
+            console.log(JSON.stringify({lengthInput, locationInput}));
+            const response = await fetch(hostServer, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,13 +37,21 @@ export default function GeneratingItinerariesScreen () {
                 body: JSON.stringify({lengthInput, locationInput}),
             });
             const data = await response.json();
-            setResult(data.response);
+            setResult(JSON.stringify(data));
         } catch (e) {
             Alert.alert("Couldn't generate itinerary", e.message);
         } finally {
             setLoading(false);
         }
     };
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <Text style={styles.title}>Generating a new Itinerary</Text>
+            </View>
+        );
+    }
 
     const onTryAgain = () => {
         setResult('');
@@ -84,56 +98,6 @@ export default function GeneratingItinerariesScreen () {
             </View>
         </SafeAreaView>
     );
-
-    /* const handleGenerateItinerary = async (itineraryLength, location) => {
-         try {
-             const searchResults = await searchLocation(location);
-             let locations;
-             locations = searchResults.locations;
-
-             const itinerary = await generateItinerary(itineraryLength, locations);
-             //console.log(itinerary);
-             setGeneratedItinerary(JSON.stringify(itinerary));
-             return itinerary;
-             //return itinerary?.response;
-         } catch (error) {
-             console.error('Error generating itinerary on App.js:', error);
-         }
-
-     };*/
-
-
-    /*return (
-        <SafeAreaView style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            flex: 1,
-        }}>
-            <Text>Generate Your Itinerary</Text>
-            <View style={{ marginVertical: 10 }}>
-                <Button title="7-day Itinerary" onPress={() => handleGenerateItinerary(7, 'New York')} />
-            </View>
-            <View style={{ marginVertical: 10 }}>
-                <Button title="14-day Itinerary" onPress={() => handleGenerateItinerary(14, 'New York')} />
-            </View>
-            <View style={{ marginVertical: 10 }}>
-                <TextInput
-                    placeholder="Enter Location"
-                    value={locationInput}
-                    onChangeText={setLocationInput}
-                    style={{
-                        borderWidth: 1,
-                        borderColor: 'gray',
-                        borderRadius: 5,
-                        paddingHorizontal: 10,
-                        paddingVertical: 5,
-                        marginBottom: 10,
-                    }}
-                />
-            </View>
-            <Text>{generatedItinerary}</Text>
-        </SafeAreaView>
-    );*/
 }
 
 const styles= StyleSheet.create({
@@ -201,6 +165,58 @@ const styles= StyleSheet.create({
     },
 
 });
+
+    /* const handleGenerateItinerary = async (itineraryLength, location) => {
+         try {
+             const searchResults = await searchLocation(location);
+             let locations;
+             locations = searchResults.locations;
+
+             const itinerary = await generateItinerary(itineraryLength, locations);
+             //console.log(itinerary);
+             setGeneratedItinerary(JSON.stringify(itinerary));
+             return itinerary;
+             //return itinerary?.response;
+         } catch (error) {
+             console.error('Error generating itinerary on App.js:', error);
+         }
+
+     };*/
+
+
+    /*return (
+        <SafeAreaView style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+        }}>
+            <Text>Generate Your Itinerary</Text>
+            <View style={{ marginVertical: 10 }}>
+                <Button title="7-day Itinerary" onPress={() => handleGenerateItinerary(7, 'New York')} />
+            </View>
+            <View style={{ marginVertical: 10 }}>
+                <Button title="14-day Itinerary" onPress={() => handleGenerateItinerary(14, 'New York')} />
+            </View>
+            <View style={{ marginVertical: 10 }}>
+                <TextInput
+                    placeholder="Enter Location"
+                    value={locationInput}
+                    onChangeText={setLocationInput}
+                    style={{
+                        borderWidth: 1,
+                        borderColor: 'gray',
+                        borderRadius: 5,
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                        marginBottom: 10,
+                    }}
+                />
+            </View>
+            <Text>{generatedItinerary}</Text>
+        </SafeAreaView>
+    );*/
+
+
 
 //export default GeneratingItinerariesScreen;
 

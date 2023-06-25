@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:3000/api'
+const chatGPTConfig = require('../voyager-be/config/chatGPTConfig');
+const BASE_URL = chatGPTConfig.apiServer;
 
 export const generateItinerary = async (itineraryLength, locations) => {
     try {
