@@ -84,7 +84,7 @@ export default function GeneratingItinerariesScreen () {
                     keyboardType="numeric"
                     style={styles.input}
                     value={lengthInput.toString()}
-                    onChangeText={(s) => setLengthInput(Number.parseInt(s))}
+                    onChangeText={(s) => setLengthInput(Number.parseInt(s || "0"))}
                 />
 
                 <Text style={styles.label}>Location Input</Text>
