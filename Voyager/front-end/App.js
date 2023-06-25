@@ -70,7 +70,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
 
 const googleConfig = require('./config/googleConfig');
-
 WebBrowser.maybeCompleteAuthSession();
 
 export default function App() {
