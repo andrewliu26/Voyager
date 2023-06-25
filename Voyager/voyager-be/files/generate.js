@@ -8,7 +8,7 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-export default async function (req, res) {
+const generate = async function (req, res) {
     if(!configuration.apiKey) {
         res.status(500).json({
             error: {
@@ -54,6 +54,8 @@ export default async function (req, res) {
 function generatePrompt(itineraryLength, location) {
     return `suggest a ${itineraryLength}-day itinerary for ${location}`;
 }
+
+module.exports = generate;
 
 /*const generate = async (itineraryLength, location) => {
     const response = await openaiClient.createCompletion({
