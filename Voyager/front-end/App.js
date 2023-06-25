@@ -37,7 +37,7 @@ export default function GeneratingItinerariesScreen () {
                 body: JSON.stringify({lengthInput, locationInput}),
             });
             const data = await response.json();
-            setResult(JSON.stringify(data));
+            setResult(JSON.parse(JSON.stringify(data)));
         } catch (e) {
             Alert.alert("Couldn't generate itinerary", e.message);
         } finally {
@@ -63,7 +63,7 @@ export default function GeneratingItinerariesScreen () {
                 <Text style={styles.title}>
                     Here is your generated itinerary 💡
                 </Text>
-                <Text style={styles.result}>{result}</Text>
+                <Text style={styles.result}>{result.response}</Text>
                 <Pressable onPress={onTryAgain} style={styles.button}>
                     <Text style={styles.buttonText}>Try again</Text>
                 </Pressable>
