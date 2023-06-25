@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StatusBar } from "expo-status-bar";
-import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image} from "react-native";
+import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image, ScrollView } from "react-native";
 import { generateItinerary, searchLocation } from "./api";
 import ipConfig from "./config/ipConfig"
 
@@ -63,9 +63,12 @@ export default function GeneratingItinerariesScreen () {
                 <Text style={styles.title}>
                     Here is your generated itinerary 💡
                 </Text>
-                <Text style={styles.result}>{result.response}</Text>
+                <ScrollView style={styles.scrollView}>
+                    <Text style={styles.result}>{result.response}</Text>
+
+                </ScrollView>
                 <Pressable onPress={onTryAgain} style={styles.button}>
-                    <Text style={styles.buttonText}>Try again</Text>
+                    <Text style={styles.buttonText}>Back to Generate Itinerary</Text>
                 </Pressable>
             </SafeAreaView>
         );
@@ -107,10 +110,15 @@ const styles= StyleSheet.create({
         justifyContent: "center",
         margin: 10,
     },
+    scrollView: {
+        marginHorizontal: 0,
+        paddingVertical: 0,
+    },
 
     title: {
         fontSize: 22,
         fontWeight: "bold",
+        marginVertical: 10,
     },
 
     input:{
@@ -142,7 +150,7 @@ const styles= StyleSheet.create({
     },
 
     button: {
-        marginTop: "auto",
+        marginTop: 20,
         backgroundColor: "#10a37f",
         padding: 16,
         borderRadius: 4,
