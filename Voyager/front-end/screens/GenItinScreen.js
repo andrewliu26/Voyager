@@ -1,9 +1,13 @@
 import React, {useState} from "react";
 import ipConfig from "../config/ipConfig";
-import {Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {Alert, Button, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
+import { saveItinerary } from "../api";
+import { useNavigation } from '@react-navigation/native';
+ // Import useNavigation from @react-navigation/native
 
-function GenerateItineraryScreen () {
+function GenerateItineraryScreen ({navigation}) {
+    //const navigation = useNavigation();
     //const [inputText, setInputText ] = useState('');
     const [locationInput, setLocationInput] = useState('');
     const [lengthInput, setLengthInput] = useState('');
@@ -35,6 +39,22 @@ function GenerateItineraryScreen () {
         }
     };
 
+    const saveGeneratedItinerary = async () => {
+        try {
+            const itineraryData = {
+                title: `${locationInput} Trip`, // Replace with the actual title
+                details: JSON.stringify(generatedItinerary) // Convert the generated itinerary to a string
+            };
+
+            const savedItinerary = await saveItinerary(itineraryData);
+            // Do something with the saved itinerary if needed
+            console.log("Saved itinerary:", savedItinerary);
+        } catch (error) {
+            Alert.alert("Error saving itinerary", error.message);
+        }
+    };
+
+
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
@@ -60,6 +80,14 @@ function GenerateItineraryScreen () {
                 <Pressable onPress={onTryAgain} style={styles.button}>
                     <Text style={styles.buttonText}>Back to Generate Itinerary</Text>
                 </Pressable>
+                <Pressable onPress={saveGeneratedItinerary} style={styles.button}>
+                    <Text style={styles.buttonText}>Save Itinerary</Text>
+                </Pressable>
+                <Button
+                    title="View Saved Itineraries"
+                    onPress={() => navigation.navigate('SavedItinScreen')}
+                />
+
             </SafeAreaView>
         );
     }
