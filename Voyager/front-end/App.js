@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { StatusBar } from "expo-status-bar";
 import {StyleSheet, Text, View, TextInput, Pressable, SafeAreaView, Alert, Image, ScrollView } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { generateItinerary, searchLocation } from "./api";
 import ipConfig from "./config/ipConfig"
 
 const hostServer = ipConfig.hostServer;
 
 
-export default function GeneratingItinerariesScreen () {
+function GeneratingItinerariesScreen () {
     //const [inputText, setInputText ] = useState('');
     const [locationInput, setLocationInput] = useState('');
     const [lengthInput, setLengthInput] = useState('');
@@ -100,6 +103,43 @@ export default function GeneratingItinerariesScreen () {
                 <StatusBar style="auto"/>
             </View>
         </SafeAreaView>
+    );
+}
+
+function SettingsScreen() {
+    return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Settings!</Text>
+        </View>
+    );
+}
+
+const Tab = createBottomTabNavigator();
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+
+                        if(route.name === 'Generate Itinerary') {
+                            iconName = focused
+                            ? 'ios-information-circle'
+                                : 'ios-information-circle-outline';
+                        } else if(route.name === 'Settings') {
+                            iconName = focused ? 'ios-list' : 'ios-list-outline';
+                        }
+                        return <Ionicons name={iconName} size={size} color={color}/>
+                    },
+                    tabBarActiveTintColor: 'tomato',
+                    tabBarInactiveTintColor: 'gray',
+
+                })}>
+                <Tab.Screen name="Generate Itinerary" component={GeneratingItinerariesScreen}/>
+                <Tab.Screen name="Settings" component={SettingsScreen}/>
+            </Tab.Navigator>
+        </NavigationContainer>
     );
 }
 
