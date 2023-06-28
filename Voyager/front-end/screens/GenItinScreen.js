@@ -76,7 +76,6 @@ function GenerateItineraryScreen () {
                 </Text>
                 <ScrollView style={styles.scrollView}>
                     <Text style={styles.result}>{result.response}</Text>
-
                 </ScrollView>
                 <Pressable onPress={onTryAgain} style={styles.button}>
                     <Text style={styles.buttonText}>Back to Generate Itinerary</Text>

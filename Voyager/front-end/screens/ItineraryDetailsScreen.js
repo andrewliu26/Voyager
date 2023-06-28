@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import {View, Text, ScrollView, StyleSheet} from "react-native";
 
 function ItineraryDetailsScreen({ route }) {
     const { itinerary } = route.params;
@@ -7,10 +7,19 @@ function ItineraryDetailsScreen({ route }) {
 
     return (
         <View>
-            <Text>Title: {itinerary.title}</Text>
-            <Text>Details: {itinerary.details}</Text>
+            <ScrollView style={styles.scrollView}>
+                <Text>Title: {itinerary.title}</Text>
+
+                <Text style={styles.result}>Details: {itinerary.details}</Text>
+            </ScrollView>
         </View>
     );
 }
 
+const styles = StyleSheet.create({
+    scrollView: {
+        marginHorizontal: 0,
+        paddingVertical: 0,
+    },
+});
 export default ItineraryDetailsScreen;
