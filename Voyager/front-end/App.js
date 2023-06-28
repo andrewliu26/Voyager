@@ -62,7 +62,7 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                {/*<Stack.Screen name={'LoginScreen'} component={LoginScreen} options={{headerShown: false}}/>*/}
+                <Stack.Screen name={'LoginScreen'} component={LoginScreen} options={{headerShown: false}}/>
                 <Stack.Screen name={'UserScreen'} component={UserScreen} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>

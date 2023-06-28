@@ -5,10 +5,11 @@ const googleConfig = require('../../front-end/config/googleConfig');
 
 const CLIENT_ID = googleConfig.CLIENT_ID;
 const CLIENT_SECRET = googleConfig.CLIENT_SECRET;
+const REDIRECT_URI = googleConfig.REDIRECT_URI;
 
 async function signUp(code, res) {
 
-    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=http://127.0.0.1:3000/google&grant_type=authorization_code`;
+    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}&grant_type=authorization_code`;
 
     const response = await fetch(url, {
         method: "POST",
