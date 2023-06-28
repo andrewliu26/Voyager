@@ -32,6 +32,7 @@ function GenerateItineraryScreen () {
             });
             const data = await response.json();
             setResult(JSON.parse(JSON.stringify(data)));
+            setGeneratedItinerary(JSON.parse(JSON.stringify(data)));
         } catch (e) {
             Alert.alert("Couldn't generate itinerary", e.message);
         } finally {

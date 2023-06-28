@@ -81,6 +81,23 @@ router.get('/saved-itineraries', (req, res) => {
         });
 });
 
+router.delete('/delete-itinerary/:id', (req, res) => {
+    const { id } = req.params;
+
+    Itinerary.findByIdAndDelete(id)
+        .then((deletedItinerary) => {
+            if(!deletedItinerary) {
+                return res.status(404).json({error: 'Itinerary not found'});
+            }
+            console.log('Deleted Itinerary', deletedItinerary);
+            res.json({deletedItinerary});
+        })
+        .catch((error) => {
+            console.error('Error deleting itinerary:', error);
+            res.status(500).json({error: 'Failed to delete itinerary'});
+        });
+});
+
 router.get('/search-location', async (req, res) => {
     const { query } = req.query;
 

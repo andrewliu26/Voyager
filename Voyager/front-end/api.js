@@ -48,6 +48,22 @@ export const getSavedItineraries = async () => {
     }
 };
 
+export const deleteItinerary = async (itineraryId) => {
+    try {
+        const response = await fetch(`${BASE_URL}/delete-itinerary/${itineraryId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const data = await response.json();
+        return data.deletedItinerary;
+    } catch(error) {
+        console.error('Error deleting itinerary: ', error);
+        throw error;
+    }
+};
+
 export const searchLocation = async (query) => {
     try {
         const response = await fetch(`${BASE_URL}/search-location?query=${encodeURIComponent(query)}`);

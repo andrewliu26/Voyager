@@ -24,7 +24,7 @@ function ItineraryStackScreen() {
     return (
         <ItineraryStack.Navigator>
             <ItineraryStack.Screen name = "Itineraries" component={SavedItinerariesScreen}/>
-            <ItineraryStack.Screen name = "Details" component={ItineraryDetailsScreen}/>
+            <ItineraryStack.Screen name = "ItineraryDetailsScreen" component={ItineraryDetailsScreen}/>
         </ItineraryStack.Navigator>
     )
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {Text, View, TouchableOpacity} from "react-native";
 import { getSavedItineraries } from "../api";
+import { deleteItinerary } from "../api";
 import {useNavigation} from '@react-navigation/native';
 function SavedItinScreen() {
     const navigation = useNavigation();
@@ -20,8 +21,20 @@ function SavedItinScreen() {
     };
 
     const handleItineraryPress = (itinerary) => {
+        //console.log(itinerary);
         navigation.navigate('ItineraryDetailsScreen', { itinerary: itinerary });
     }
+
+    const handleDeleteItinerary = async (itinerary) => {
+        try {
+            await deleteItinerary(itinerary._id);
+
+            const updatedItineraries = savedItineraries.filter((item) => item._id !== itinerary._id);
+            setSavedItineraries(updatedItineraries);
+        } catch (error) {
+            console.error("Error deleting itinerary", error);
+        }
+    };
 
     return (
         <View>
