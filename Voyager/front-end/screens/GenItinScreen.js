@@ -85,7 +85,7 @@ function GenerateItineraryScreen ({navigation}) {
                 </Pressable>
                 <Button
                     title="View Saved Itineraries"
-                    onPress={() => navigation.navigate('SavedItinScreen')}
+                   // onPress={() => navigation.navigate('SavedItinScreen')}
                 />
 
             </SafeAreaView>
