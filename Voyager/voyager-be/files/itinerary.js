@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const itinerarySchema = new mongoose.Schema({
-    title: String,
-    details: String,
+    title: {
+       type: String,
+        required: true
+    },
+    details: {
+        type: String,
+        required: true
+    }
 });
 
 const Itinerary = mongoose.model('Itinerary', itinerarySchema);

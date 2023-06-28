@@ -53,15 +53,16 @@ router.post('/generate-itinerary',  async (req, res) => {
 
 router.post('/save-itinerary', (req, res) => {
     const { title, details } = req.body;
-
+    console.log(title, details);
     const itinerary = new Itinerary({
-        title,
-        details
+        title: title,
+        details: details
     });
 
     itinerary.save()
-        .then(() => {
-            res.json({ savedItinerary: 'Itinerary saved successfully '});
+        .then(savedItinerary => {
+            console.log('Saved Itinerary', savedItinerary);
+            res.json({ savedItinerary: savedItinerary});
         })
         .catch((error)=> {
             console.error('Error saving itinerary:', error);

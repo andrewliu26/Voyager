@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {Text, View, TouchableOpacity} from "react-native";
 import { getSavedItineraries } from "../api";
-function SavedItinScreen({navigation}) {
-    const [savedItineraries, setSavedItineraries] = useState('');
+import {useNavigation} from '@react-navigation/native';
+function SavedItinScreen() {
+    const navigation = useNavigation();
+    const [savedItineraries, setSavedItineraries] = useState([]);
 
     useEffect(() => {
         fetchSavedItineraries();
@@ -17,9 +19,9 @@ function SavedItinScreen({navigation}) {
         }
     };
 
-    /*const handleItineraryPress = (itinerary) => {
-        navigation.navigate("ItineraryDetailsScreen", { itinerary: itinerary });
-    }*/
+    const handleItineraryPress = (itinerary) => {
+        navigation.navigate('ItineraryDetailsScreen', { itinerary: itinerary });
+    }
 
     return (
         <View>

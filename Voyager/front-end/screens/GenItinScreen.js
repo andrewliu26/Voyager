@@ -6,8 +6,8 @@ import { saveItinerary } from "../api";
 import { useNavigation } from '@react-navigation/native';
  // Import useNavigation from @react-navigation/native
 
-function GenerateItineraryScreen ({navigation}) {
-    //const navigation = useNavigation();
+function GenerateItineraryScreen () {
+    const navigation = useNavigation();
     //const [inputText, setInputText ] = useState('');
     const [locationInput, setLocationInput] = useState('');
     const [lengthInput, setLengthInput] = useState('');
@@ -46,7 +46,7 @@ function GenerateItineraryScreen ({navigation}) {
                 details: JSON.stringify(generatedItinerary) // Convert the generated itinerary to a string
             };
 
-            const savedItinerary = await saveItinerary(itineraryData);
+            const savedItinerary = await saveItinerary(itineraryData.title, itineraryData.details);
             // Do something with the saved itinerary if needed
             console.log("Saved itinerary:", savedItinerary);
         } catch (error) {
@@ -83,10 +83,6 @@ function GenerateItineraryScreen ({navigation}) {
                 <Pressable onPress={saveGeneratedItinerary} style={styles.button}>
                     <Text style={styles.buttonText}>Save Itinerary</Text>
                 </Pressable>
-                <Button
-                    title="View Saved Itineraries"
-                   // onPress={() => navigation.navigate('SavedItinerariesScreen')}
-                />
 
             </SafeAreaView>
         );
