@@ -85,7 +85,7 @@ function GenerateItineraryScreen ({navigation}) {
                 </Pressable>
                 <Button
                     title="View Saved Itineraries"
-                   // onPress={() => navigation.navigate('SavedItinScreen')}
+                   // onPress={() => navigation.navigate('SavedItinerariesScreen')}
                 />
 
             </SafeAreaView>
@@ -171,7 +171,7 @@ const styles= StyleSheet.create({
 
     button: {
         marginTop: 20,
-        backgroundColor: "#10a37f",
+        backgroundColor: "#7ea275",
         padding: 16,
         borderRadius: 4,
         alignItems: "center",

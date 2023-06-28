@@ -1,19 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+let createError = require('http-errors');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let logger = require('morgan');
 const bodyParser = require('body-parser');
 
-var cors = require('cors');
-var indexRouter = require('../voyager-be/routes');
-var usersRouter = require('../voyager-be/routes/users');
+let cors = require('cors');
+let indexRouter = require('../voyager-be/routes');
+let usersRouter = require('../voyager-be/routes/users');
 const chatGPTRouter = require('../voyager-be/routes/chatGPTAPI');
 const facebookRouter = require('../voyager-be/routes/facebookOauth');
+let googleRouter = require('../voyager-be/routes/googleAuth');
 
 const PORT = 3000;
 
-var app = express();
+let app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', indexRouter);
+app.use('/google', googleRouter);
 app.use('/users', usersRouter);
 app.use('/', facebookRouter);
 app.use('/api', chatGPTRouter); //http://localhost:3000/chatgpt
