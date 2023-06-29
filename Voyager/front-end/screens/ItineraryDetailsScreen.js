@@ -3,14 +3,16 @@ import {View, Text, ScrollView, StyleSheet} from "react-native";
 
 function ItineraryDetailsScreen({ route }) {
     const { itinerary } = route.params;
-    console.log(itinerary.title, itinerary.details);
+    const title = itinerary.title;
+    const details = (JSON.parse(itinerary.details)).response;
+    console.log(title, details);
 
     return (
         <View>
             <ScrollView style={styles.scrollView}>
-                <Text>Title: {itinerary.title}</Text>
+                <Text>Title: {title}</Text>
 
-                <Text style={styles.result}>Details: {itinerary.details}</Text>
+                <Text style={styles.result}>Details: {details}</Text>
             </ScrollView>
         </View>
     );
