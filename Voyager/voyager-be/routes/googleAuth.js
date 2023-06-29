@@ -5,10 +5,12 @@ const googleConfig = require('../../front-end/config/googleConfig');
 
 const CLIENT_ID = googleConfig.CLIENT_ID;
 const CLIENT_SECRET = googleConfig.CLIENT_SECRET;
+const REDIRECT_URI = googleConfig.REDIRECT_URI;
 
 async function signUp(code, res) {
+    console.log('CHECKPOINT: method \'signUp\' called');
 
-    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=http://127.0.0.1:3000/google&grant_type=authorization_code`;
+    const url = `https://oauth2.googleapis.com/token?code=${code}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}&grant_type=authorization_code`;
 
     const response = await fetch(url, {
         method: "POST",
@@ -18,7 +20,7 @@ async function signUp(code, res) {
     });
 
     const data = await response.json();
-    console.log("data : ", data);
+    //console.log("data : ", data);
 
     // get the id token from the response
     const { id_token } = data;
@@ -29,7 +31,7 @@ async function signUp(code, res) {
     );
 
     const verifyData = await verifyResponse.json();
-    console.log("verifyData : ", verifyData);
+    //console.log("verifyData : ", verifyData);
 
     // get the user data from the verify data
     const { name, email, picture } = verifyData;
@@ -42,6 +44,7 @@ async function signUp(code, res) {
 
 router.get("/", async (req, res) => {
     console.log("req.query : ", req.query);
+    console.log("req.hostname : ", req.hostname);
 
     // use the code to get the access token
 

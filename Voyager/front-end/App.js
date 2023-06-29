@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import ipConfig from "./config/ipConfig";
 import 'expo-dev-menu';
 
 // screens
@@ -14,8 +13,6 @@ import GenerateItineraryScreen from "./screens/GenItinScreen";
 import SavedItinerariesScreen from "./screens/SavedItinScreen";
 import ItineraryDetailsScreen from "./screens/ItineraryDetailsScreen";
 
-// const hostServer = ipConfig.hostServer;
-
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const ItineraryStack = createNativeStackNavigator();
@@ -23,7 +20,7 @@ const ItineraryStack = createNativeStackNavigator();
 function ItineraryStackScreen() {
     return (
         <ItineraryStack.Navigator>
-            <ItineraryStack.Screen name = "Itineraries" component={SavedItinerariesScreen}/>
+            <ItineraryStack.Screen name = "Itineraries" component={SavedItinerariesScreen} options={{headerShown: false}}/>
             <ItineraryStack.Screen name = "ItineraryDetailsScreen" component={ItineraryDetailsScreen}/>
         </ItineraryStack.Navigator>
     )
@@ -43,7 +40,7 @@ function UserScreen({route: {params}}) {
                     } else if(route.name === 'Saved Itineraries') {
                         iconName = focused ? 'ios-albums' : 'ios-albums-outline';
                     } else if(route.name === 'Profile') {
-                        iconName = focused ? 'ios-list' : 'ios-list-outline'
+                        iconName = focused ? 'person-circle' : 'person-circle-outline'
                     }
                     return <Ionicons name={iconName} size={size} color={color}/>
                 },
@@ -62,7 +59,7 @@ export default function App() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                {/*<Stack.Screen name={'LoginScreen'} component={LoginScreen} options={{headerShown: false}}/>*/}
+                <Stack.Screen name={'LoginScreen'} component={LoginScreen} options={{headerShown: false}}/>
                 <Stack.Screen name={'UserScreen'} component={UserScreen} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>

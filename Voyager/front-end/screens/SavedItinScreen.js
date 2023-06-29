@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Text, View, TouchableOpacity, ImageBackground, StyleSheet} from "react-native";
+import {Text, View, TouchableOpacity, ImageBackground, StyleSheet, SafeAreaView} from "react-native";
 import { getSavedItineraries } from "../api";
 import { deleteItinerary } from "../api";
 import {useNavigation} from '@react-navigation/native';
@@ -87,8 +87,8 @@ function SavedItinScreen() {
     };
 
     return (
-        <View>
-            {savedItineraries.map((itinerary) => (
+        <SafeAreaView style={styles.container}>
+            {savedItineraries && savedItineraries.map((itinerary) => (
                 <TouchableOpacity
                     key={itinerary._id}
                     style={styles.button}
@@ -97,15 +97,21 @@ function SavedItinScreen() {
                     <Text style={styles.buttonText}>{itinerary.title}</Text>
                 </TouchableOpacity>
             ))}
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        marginVertical: 40,
+    },
     button: {
         borderRadius: 25, // Adjust the value to control the roundness of the button
         backgroundColor: "#7ea275", // Adjust the background color of the button
         padding: 10,
+        width: 300,
         marginBottom: 10,
         alignItems: "center",
     },
