@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#7ea275", // Adjust the background color of the button
         padding: 10,
         width: 300,
-        marginBottom: 10,
+        margin: 10,
         alignItems: "center",
     },
     buttonText: {
