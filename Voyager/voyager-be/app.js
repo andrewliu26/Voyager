@@ -50,8 +50,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(PORT, '0.0.0.0',() => {
+
+/*
+app.listen(PORT, 0.0.0.0,() => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+*/
+app.listen('voyager-server.loca.lt', () => {
+  console.log('Server is running on https://voyager-server.loca.lt/');
+})
 
 module.exports = app;
